@@ -15,5 +15,5 @@ export default defineConfig({
     {name:'portrait-light',use:{viewport:{width:390,height:844},colorScheme:'light'}},
     {name:'landscape-dark',use:{viewport:{width:844,height:390},colorScheme:'dark'}},
   ],
-  webServer: {command:'npm run preview -- --host 127.0.0.1 --port 4199 --strictPort',url:`http://127.0.0.1:4199${basePath}`,reuseExistingServer:!process.env.CI},
+  webServer: {command:'node tests/static-server.mjs',url:`http://127.0.0.1:4199${basePath}`,reuseExistingServer:false},
 });

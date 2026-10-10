@@ -7,11 +7,10 @@ import { STRINGS } from './src/strings';
 import { TOKENS } from './design/tokens/tokens';
 import pkg from './package.json' with { type: 'json' };
 
-// GitHub Pages serves from /<repo>/. The deploy workflow sets BASE_PATH;
-// locally it's just "/".
-const base = process.env.BASE_PATH || '/';
+// One committed build works at the domain root and under a repository sub-path.
+const base = './';
 
-// Build only to dist; GitHub Actions publishes the production artifact.
+// Publish copies the validated dist output to the repository root after Vite exits.
 export default defineConfig({
   root: 'src',
   publicDir: '../public',

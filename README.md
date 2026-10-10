@@ -16,13 +16,17 @@ npm run build
 npm run test:e2e
 ```
 
-The browser suite starts the production preview itself. Install Chromium with `npx playwright install --with-deps chromium`. The cloud workspace can use its installed `/usr/bin/chromium`; elsewhere set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an existing compatible executable or use Playwright’s downloaded browser. No credentials or server are needed for ordinary development.
+The browser suite starts a plain static server for the repository root; it does not invoke Vite or build the app. Install Chromium with `npx playwright install --with-deps chromium`. The cloud workspace can use its installed `/usr/bin/chromium`; elsewhere set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an existing compatible executable or use Playwright’s downloaded browser. No credentials or backend services are needed for ordinary development.
 
-Vite reads src/ and builds dist/. Never publish source or handoff/. BASE_PATH defaults to `/`; use `BASE_PATH=/nodit/ npm run build` for the repository sub-path. To test that output, run `BASE_PATH=/nodit/ npm run test:e2e -- --grep 'PWA:|integ2|longest cards'`.
+Vite reads src/ and builds dist/. `npm run build` validates that output, removes the previous generated root files and copies the new build to the repository root. After every source change, rebuild and commit index.html, assets/, icons/, manifest.webmanifest, sw.js and workbox-*.js together with the source. Keep dist/ ignored. Never edit the generated root files directly.
+
+All built URLs are relative, so the same committed site works at `/` and `/nodit/`. Test a sub-path without rebuilding: `BASE_PATH=/nodit/ npm run test:e2e -- --grep 'static hosting:|PWA:|integ2|longest cards'`.
 
 ## Deploy and install
 
-In GitHub repository settings, choose **Pages → Source → GitHub Actions**. A push to main runs types, unit tests, content/design checks, browser regression tests, a sub-path build and sub-path browser tests before uploading only dist/ to Pages. No preview branches deploy.
+The Cloudflare Pages site is https://nodit.pages.dev. Hosts that publish the checkout can serve the repository root directly: no build command is required, and the output directory is the repository root (`.`). The committed index.html loads bundled JavaScript from ./assets/; it never loads TypeScript source. There is no Wrangler configuration requiring a build step.
+
+For GitHub Pages, choose **Pages → Source → GitHub Actions**. A push to main runs types, unit tests, content/design checks and browser tests at both root and sub-path URLs, then stages only the generated root site files for Pages. Source and handoff files are excluded from that artifact. No preview branches deploy.
 
 On iPhone, open the deployed site in Safari, tap Share, then Add to Home Screen. Open the installed app once online to cache its shell, fonts, icons and deck bundle. Subsequent rounds work offline; browser speech recognition may still require an Internet connection. A waiting update shows “New version ready · Reload”.
 

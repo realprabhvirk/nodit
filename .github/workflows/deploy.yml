@@ -21,12 +21,11 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run typecheck && npm test && npm run check
       - run: npm run icons && git diff --exit-code -- public/icons
+      - name: Verify the committed site before rebuilding
+        run: node scripts/check-build.mjs .
       - run: npm run build
       - run: npm run test:e2e
-      - run: npm run build
-        env:
-          BASE_PATH: /${{ github.event.repository.name }}/
-      - run: npm run test:e2e -- --grep 'PWA:|integ2|longest cards'
+      - run: npm run test:e2e -- --grep 'static hosting:|PWA:|integ2|longest cards'
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
       - uses: actions/upload-artifact@v4
@@ -36,9 +35,14 @@ jobs:
           path: |
             playwright-report/
             test-results/
+      - name: Stage the ready-to-serve root site
+        run: |
+          mkdir -p "$RUNNER_TEMP/nodit-pages"
+          cp -R index.html assets icons sw.js manifest.webmanifest workbox-*.js .nojekyll "$RUNNER_TEMP/nodit-pages/"
+          if [ -f registerSW.js ]; then cp registerSW.js "$RUNNER_TEMP/nodit-pages/"; fi
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ${{ runner.temp }}/nodit-pages
   deploy:
     needs: build
     runs-on: ubuntu-latest

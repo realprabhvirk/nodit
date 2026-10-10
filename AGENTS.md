@@ -14,6 +14,7 @@ npm install · npm run dev · npm test · npm run test:e2e · npm run build · n
 - Deck JSON is imported verbatim from handoff/decks. Never write or edit cards.
 - The SPORRENCESON code is never committed, logged or put in tests (env SPORRENCESON_CODE only).
 - handoff/LESSONS-LEARNED.md rules are binding. tuned-constants.json values are binding.
+- The host serves the repository root without a build step. After every source change, run npm run build and commit the generated root index.html, assets/, icons/, manifest and service-worker files. Never edit generated files directly. Keep Vite base relative (./).
 - Don't use the "Heads Up" name, branding, deck names or colours.
 
 ## Architecture

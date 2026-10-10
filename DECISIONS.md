@@ -1,7 +1,10 @@
 # Decisions
 
 ## 2026-10-10 — Source and build boundary
-The authoritative handoff was retrieved from the owner’s existing repository at commit `8b8745eb68381e53e26f260c011d21b1720f74a0`. The handoff copies take precedence for tuned modules. Remaining UI modules come from the same checkout. The original brief is preserved under handoff/ so historical branding stays in the reference area. The build writes only dist/; the old root-copy publish script is omitted.
+The authoritative handoff was retrieved from the owner’s existing repository at commit `8b8745eb68381e53e26f260c011d21b1720f74a0`. The handoff copies take precedence for tuned modules. Remaining UI modules come from the same checkout. The original brief is preserved under handoff/ so historical branding stays in the reference area. The initial implementation published dist/ through GitHub Actions; direct-root hosting support below supersedes that boundary.
+
+## 2026-10-10 — Direct-root hosting
+The owner reported a blank Cloudflare Pages site because the host publishes the checkout without running a build. Each build now validates dist/, replaces only the generated root outputs and copies the ready-to-serve site into the repository root for committing. Vite uses ./ URLs so one build supports root and sub-path hosting. Browser tests use a plain static server, including a blocked-bundle check for the four-second fallback. GitHub Actions stages the generated root files only; no host configuration requires dist/.
 
 ## 2026-10-10 — Compatibility
 Deck data remains byte-identical to the handoff, including legacy colour keys and the locked deck id. New custom decks save the new palette names; older apps may display these as slate. Storage starts fresh under nodit:.

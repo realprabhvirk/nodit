@@ -7,7 +7,7 @@ The core app is ported from the supplied handoff; source identity and hashes are
 | Area | Implementation and evidence |
 | --- | --- |
 | Static platform | Vite 7, strict TypeScript, Preact 10/signals, local state, bundled fonts/icons; production build and offline browser test |
-| Pages sub-path | Relative manifest id/start/scope; BASE_PATH build and browser checks; workflow publishes only dist |
+| Static hosting and sub-path | Committed root build with relative assets and manifest; plain static-server browser checks at / and /nodit/; workflow stages only generated root files |
 | PWA updates | Original prompt registration, visible/30-minute update checks, reload toast; source review; actual redeploy acceptance remains manual |
 | Shell | Three persistent tab views, 36 px sticky title, safe areas, 44 px short-landscape tab bar, keyed full-screen flows; browser/visual checks |
 | Sheets | Body portals, header/grabber, drag/scrim dismissal, tall/modal variants, 420 ms transitions, closed roots noninteractive; preserved controls plus quick-tap regression |
@@ -37,8 +37,8 @@ The core app is ported from the supplied handoff; source identity and hashes are
 
 | Lesson | Evidence/check |
 | --- | --- |
-| 1 Built HTML and fallback | check-build.mjs verifies assets JS and no raw TS; source HTML retains delayed failure message |
-| 2 Relative sub-path URLs | PWA browser test against BASE_PATH build |
+| 1 Built HTML and fallback | check-build.mjs verifies both dist and root outputs; static-host browser checks assert bundled JS and the four-second failure message |
+| 2 Relative sub-path URLs | Same root build served under BASE_PATH for browser tests |
 | 3 Prompted updates | main.tsx reference registration and visibility/interval update checks |
 | 4 Main-only deployment | deploy.yml triggers push main and workflow_dispatch |
 | 5 Fast taps | freeze browser test; no global touchend cancellation |
@@ -79,7 +79,7 @@ The core app is ported from the supplied handoff; source identity and hashes are
 | 40 Canvas DOM/first frame | fake-camera playable 1280×720 clip browser test |
 | 41 Live unlocked lists | state computed allDecks retained; owner-code test optional |
 | 42 Clear queue on relock | vault source review; owner-code test optional |
-| 43 Encrypted public bundle | check-build.mjs and nine deck hashes; deploy uploads only dist |
+| 43 Encrypted public bundle | check-build.mjs and nine deck hashes; Pages artifact contains only generated root files |
 | 44 Built-in collision | repeated built-in import browser regression |
 | 45 Status/theme colours | index metadata and per-screen chrome source review; light/dark screenshots |
 | 46 Word fit | 20 longest cards in every public deck at both sizes; original algorithm and fonts.ready retained |
@@ -91,7 +91,9 @@ Lighthouse 11.7.1 PWA category scored 100/100 on the local production preview us
 
 ## Outstanding external acceptance
 
+The direct-root hosting fix passed 20 browser checks against a plain static server (10 at / and 10 at /nodit/), including bundled JavaScript, the blocked-bundle fallback, offline play and gameplay. All 103 unit tests pass; one owner-code unit test skips. Repeated publishing removes stale assets and leaves source untouched. The cloud network denied access to https://nodit.pages.dev, so live deployment remains unverified here.
+
 - Owner passcode was not supplied: real-deck successful unlock/relock tests skip. Synthetic crypto tests and wrong-input tests run.
 - Real iPhone installation, hardware sensors, permissions, Dictation, haptics and Photos share sheet require the README device checklist.
-- A local build and configured workflow do not prove GitHub Pages deployment. Check the main-branch Actions run and Pages settings after push.
+- Local static-server checks do not prove live deployment. Check the Cloudflare Pages deployment for main and, when enabled, the GitHub Pages Actions run.
 - Optional Labs experiments remain unimplemented and disabled. No experiment changes normal gameplay.
