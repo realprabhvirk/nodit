@@ -1,0 +1,44 @@
+{
+  "lighthouseVersion": "11.7.1",
+  "environment": "Local production preview, Chromium 151",
+  "pwaScore": 1,
+  "installableManifest": 1,
+  "audits": {
+    "viewport": {
+      "score": 1,
+      "mode": "metricSavings"
+    },
+    "installable-manifest": {
+      "score": 1,
+      "mode": "binary"
+    },
+    "splash-screen": {
+      "score": 1,
+      "mode": "binary"
+    },
+    "themed-omnibox": {
+      "score": 1,
+      "mode": "binary"
+    },
+    "maskable-icon": {
+      "score": 1,
+      "mode": "binary"
+    },
+    "content-width": {
+      "score": 1,
+      "mode": "binary"
+    },
+    "pwa-cross-browser": {
+      "score": null,
+      "mode": "manual"
+    },
+    "pwa-page-transitions": {
+      "score": null,
+      "mode": "manual"
+    },
+    "pwa-each-page-has-url": {
+      "score": null,
+      "mode": "manual"
+    }
+  }
+}

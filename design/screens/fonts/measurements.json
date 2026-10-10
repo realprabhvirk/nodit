@@ -1,0 +1,62 @@
+[
+  {
+    "family": "Archivo Black",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "bytes": 18604,
+    "minimumFontPx": 91,
+    "cards": 20
+  },
+  {
+    "family": "Archivo Black",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 18604,
+    "minimumFontPx": 39,
+    "cards": 20
+  },
+  {
+    "family": "Bricolage Grotesque",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "bytes": 21844,
+    "minimumFontPx": 101,
+    "cards": 20
+  },
+  {
+    "family": "Bricolage Grotesque",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 21844,
+    "minimumFontPx": 45,
+    "cards": 20
+  },
+  {
+    "family": "Unbounded",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "bytes": 21828,
+    "minimumFontPx": 82,
+    "cards": 20
+  },
+  {
+    "family": "Unbounded",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 21828,
+    "minimumFontPx": 35,
+    "cards": 20
+  }
+]
